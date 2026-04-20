@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界 · 只为小雅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background 0.3s, color 0.2s, transform 0.2s;
+        }
+
+        /* 自动浅色 / 深色模式 */
+        :root {
+            --bg: #fcfdff;
+            --card: #ffffff;
+            --text: #2d3436;
+            --gray: #94a3b8;
+            --blue: #F5F7FA;
+            --apricot: #FFF9F2;
+            --border: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1a1c20;
+                --card: #25282f;
+                --text: #e8e8e8;
+                --gray: #8a91a0;
+                --blue: #2d323b;
+                --apricot: #383026;
+                --border: #3b4049;
+            }
+        }
+
+        body {
+            background: var(--bg);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-weight: 300;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* 功能菜单网格 */
+        .menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* 功能卡片 */
+        .item {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 26px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            cursor: pointer;
+        }
+        .item:hover {
+            transform: translateY(-2px);
+        }
+
+        .item-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        .item-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .item-desc {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* 待开发样式 */
+        .item.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .coming-soon {
+            color: #ff9ebb;
+            font-weight: 500;
+        }
+
+        /* 卡片颜色风格 */
+        .item-blue { background: var(--blue); }
+        .item-apricot { background: var(--apricot); }
+
+        /* 飘落爱心 */
+        .heart-float {
+            position: fixed;
+            pointer-events: none;
+            animation: floatHeart 3s linear forwards;
+            z-index: 999;
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50vh); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>我的世界 · 只为你 ✨</h1>
+            <p>致我最爱的小雅同学</p>
+        </div>
+
+        <div class="menu">
+            <!-- 已完成 -->
+            <div class="item item-apricot" onclick="go('message.html')">
+                <div class="item-icon">💌</div>
+                <div class="item-title">爱情树洞</div>
+                <div class="item-desc">想对你说的每一句话</div>
+            </div>
+
+            <!-- 已完成：3D情侣跳一跳 -->
+            <div class="item item-blue" onclick="go('jump.html')">
+                <div class="item-icon">🎮</div>
+                <div class="item-title">3D跳一跳</div>
+                <div class="item-desc">和小雅双人联机玩</div>
+            </div>
+
+            <!-- 待开发 -->
+            <div class="item item-blue disabled">
+                <div class="item-icon">🖼️</div>
+                <div class="item-title">我们的照片</div>
+                <div class="item-desc coming-soon">【待开发】</div>
+            </div>
+
+            <!-- 待开发 -->
+            <div class="item item-apricot disabled">
+                <div class="item-icon">⏳</div>
+                <div class="item-title">恋爱时光</div>
+                <div class="item-desc coming-soon">【待开发】</div>
+            </div>
+
+            <!-- 待开发 -->
+            <div class="item item-apricot disabled">
+                <div class="item-icon">📓</div>
+                <div class="item-title">心情日记</div>
+                <div class="item-desc coming-soon">【待开发】</div>
+            </div>
+
+            <!-- 待开发 -->
+            <div class="item item-blue disabled">
+                <div class="item-icon">💛</div>
+                <div class="item-title">关于我们</div>
+                <div class="item-desc coming-soon">【待开发】</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="bgm" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-soft-piano-melody-1417.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 页面跳转
+        function go(url) {
+            window.location.href = url;
+        }
+
+        // 背景音乐
+        window.onload = () => {
+            const bgm = document.getElementById("bgm");
+            bgm.volume = 0.25;
+            bgm.play().catch(() => setTimeout(() => bgm.play(), 1000));
+        };
+
+        // 点击飘爱心
+        document.addEventListener("click", (e) => {
+            const heart = document.createElement("div");
+            heart.innerText = "💖";
+            heart.classList.add("heart-float");
+            heart.style.left = e.clientX - 10 + "px";
+            heart.style.top = e.clientY - 10 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        });
+    </script>
+</body>
+</html>
